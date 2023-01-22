@@ -23,7 +23,7 @@ function Home(){
 		setIsLoading(true)
 			await fetch(`https://agendasc.onrender.com/get_events?filter=${filterType}`,{
             	method: "GET",
-i            	mode: "cors",
+            	mode: "cors",
             	headers: {'Content-type':'application/json',},
         	})
 		.then((res) => res.json())
