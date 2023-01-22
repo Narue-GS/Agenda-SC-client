@@ -71,7 +71,7 @@ function Home(){
 			<header>
 	            <span className="title">Agenda SC</span>
 				<div className="category-box">
-					<div className="mobile-category-icon" onClick={()=>{setShowMenu(true)}}>
+					<div className="mobile-category-icon" onClick={()=>{ !showMenu? setShowMenu(true) : setShowMenu(false)}}>
                     	<FontAwesomeIcon icon={faBars}/>    
                 	</div>
 					{ showMenu?
