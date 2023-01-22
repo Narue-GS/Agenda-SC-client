@@ -21,9 +21,9 @@ function Home(){
 
 	const getEvents = async() => {
 		setIsLoading(true)
-			await fetch(`http://127.0.0.1:5000/get_events?filter=${filterType}`,{
+			await fetch(`https://agendasc.onrender.com/get_events?filter=${filterType}`,{
             	method: "GET",
-            	mode: "cors",
+i            	mode: "cors",
             	headers: {'Content-type':'application/json',},
         	})
 		.then((res) => res.json())
@@ -39,7 +39,7 @@ function Home(){
 	
 	const getEvent = async(event) => {
           setIsLoading(true)
-             await fetch(`http://127.0.0.1:5000/search?name=${search}`,{
+             await fetch(`https://agendasc.onrender.com/search?name=${search}`,{
                   method: "GET",
                   mode: "cors",
                   headers: {'Content-type':'application/json',},
@@ -53,7 +53,7 @@ function Home(){
 	const detailEvent = async(event) => {
 		setEventData(null)
 		setDetail(true)
-        await fetch(`http://127.0.0.1:5000/event?data=${event.link}`,{
+        await fetch(`https://agendasc.onrender.com/event?data=${event.link}`,{
               method: "GET",
               mode: "cors",
               headers: {'Content-type':'application/json',},
