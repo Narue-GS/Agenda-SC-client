@@ -16,7 +16,7 @@ const ModalEvent = ({event, display, close}) => {
 							</div>
 						 :	<div className="loading">
 								<div>
-									<img src="https://cdn.dribbble.com/users/1186261/screenshots/3718681/_______.gif"/>
+									<img src="../../static/imgs/loading-icon.gif"/>
 								</div>
 							</div>
 					}

@@ -79,13 +79,14 @@ function Home(){
             			<span className="category" onClick={() => setFilterType("inovation")}>Inovação</span>
            	    		<span className="category" onClick={() => setFilterType("tecnology")}>Tecnologia</span>   
             	    	<span className="category" onClick={() => setFilterType("startup")}>Startup</span>   
-            	    	<a id="eliti" href="https://www.eliti.com.br/">ELITI</a>
+            	    	<a id="eliti" target="_blank" href="https://www.eliti.com.br/">ELITI</a>
 					</div>
 						: <div></div>
 					}
 				</div>
             </header>
-			{events? 
+			
+			{events.length != 0? 
             <div className="content">
 				<div className="content-box">
                 	<div className="events">
@@ -100,7 +101,13 @@ function Home(){
 						})} 
                 	</div>
 				</div>
-            </div> : <div><img src="https://cdn.dribbble.com/users/8424/screenshots/1036999/dots_2.gif"/></div>
+            </div> 
+			 :<> 	
+				<div className="skeleton">
+						<div></div>
+						<div></div>
+				</div>
+			</>
 			}
         </>
     )

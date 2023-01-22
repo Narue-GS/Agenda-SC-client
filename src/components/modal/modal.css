@@ -51,7 +51,7 @@
 @media screen and (max-width:800px) {
 	.modalContent {
 		width: 80%;
-		min-height: 40vh;
+		min-height: 80vh;
 		margin-top: 5vh;
 		justify-content: space-evenly;
 	}
