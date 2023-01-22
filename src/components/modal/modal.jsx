@@ -12,7 +12,7 @@ const ModalEvent = ({event, display, close}) => {
                	 		    	<img src={event.img}/>
                 	  		  	<span>Local: {event.location}</span>
 								<span>Data: {event.date}</span>
-								<span>Mais informações: <a href={event.link}>{event.link}</a></span>
+								<span>Mais informações: <a href={event.link} target="_blank">{event.link}</a></span>
 							</div>
 						 :	<div className="loading">
 								<div>
