@@ -12,7 +12,7 @@ function Home(){
 	const [search, setSearch] = useState("");
 	const [eventData, setEventData] = useState("");
 	const [detail, setDetail] = useState(false);
-	const [showMenu, setShowMenu] = useState(window.innerWidth > 800)
+	const [showMenu, setShowMenu] = useState(false)
 
 	const getEvents = async() => {
 		setIsLoading(true)
@@ -65,7 +65,7 @@ function Home(){
 					<div className="mobile-category-icon" onClick={()=>{ !showMenu? setShowMenu(true) : setShowMenu(false)}}>
                     	<FontAwesomeIcon icon={faBars}/>    
                 	</div>
-					{ showMenu?
+					{ showMenu || window.innerWidth > 800?
 					<div className="category-menu">
             			<button className="category" onClick={() => setFilterType("inovation")}>Inovação</button>
            	    		<button className="category" onClick={() => setFilterType("tecnology")}>Tecnologia</button>   

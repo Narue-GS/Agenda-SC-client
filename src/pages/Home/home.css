@@ -103,6 +103,7 @@ input::placeholder{
 	align-items: center;
 	gap: 3vw;
 	padding: 3vw;
+	padding-top: min(50px);
     height: auto;
     width: 100%;
 }
@@ -229,6 +230,7 @@ input::placeholder{
 		text-align: center;
 		background-color: rgb(50,50,50);
 	}
+	.category:hover {}
 	.category-menu {
 		display: flex;
 		flex-direction: column;
