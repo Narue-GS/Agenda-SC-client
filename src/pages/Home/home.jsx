@@ -7,49 +7,34 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 import ModalEvent from "../../components/modal/modal.jsx";
 
 function Home(){
-	const [events, setEvents] = useState([])
+	const [events, setEvents] = useState(allData)
 	const [isLoading, setIsLoading] = useState(true)
     const [filterType, setFilterType] = useState("all")
-	const [search, setSearch] = useState("")
-	const hendleChange = (e) => {
-		setSearch(e.target.value)
-		console.log(search)
-	}
+	const [search, setSearch] = useState("");
 	const [eventData, setEventData] = useState("");
 	const [detail, setDetail] = useState(false);
 	const [showMenu, setShowMenu] = useState(window.innerWidth > 800)
 
 	const getEvents = async() => {
+		setAllData([])
 		setIsLoading(true)
-			await fetch(`https://agendasc.onrender.com/get_events?filter=${filterType}`,{
-            	method: "GET",
-            	mode: "cors",
-            	headers: {'Content-type':'application/json',},
-        	})
+		await fetch(`https://agendasc.onrender.com/get_events?filter=all`,{
+          	method: "GET",
+           	mode: "cors",
+           	headers: {'Content-type':'application/json',},
+        })
 		.then((res) => res.json())
 		.then((data) => {
 			setIsLoading(false)
 			setEvents(Object.values(data).flat(1))
 		})
+		.then(updateEvents())
     }
     
 	useEffect(()=>{
-        getEvents()
-    },[filterType])
+		getEvents()
+    },[])
 	
-	const getEvent = async(event) => {
-          setIsLoading(true)
-             await fetch(`https://agendasc.onrender.com/search?name=${search}`,{
-                  method: "GET",
-                  mode: "cors",
-                  headers: {'Content-type':'application/json',},
-              })
-          .then((res) => res.json())
-          .then((data) => {
-              setIsLoading(false)
-              setEvents(Object.values(data).flat(1))
-          })
-      }
 	const detailEvent = async(event) => {
 		setEventData(null)
 		setDetail(true)
@@ -62,8 +47,15 @@ function Home(){
         .then((data) => {
 			setEventData(Object.assign(event, data))
         })
-
 	}
+	const updateEvents = () =>{
+        if(filterType !== "all"){
+            return events.filter(event => event._filter === filterType)
+        } else {
+            return events
+        }
+    }
+
 	return (
         <>
 			<ModalEvent event={eventData} display={detail} close={setDetail}/>
@@ -76,9 +68,9 @@ function Home(){
                 	</div>
 					{ showMenu?
 					<div className="category-menu">
-            			<span className="category" onClick={() => setFilterType("inovation")}>Inovação</span>
-           	    		<span className="category" onClick={() => setFilterType("tecnology")}>Tecnologia</span>   
-            	    	<span className="category" onClick={() => setFilterType("startup")}>Startup</span>   
+            			<button className="category" onClick={() => setFilterType("inovation")}>Inovação</button>
+           	    		<button className="category" onClick={() => setFilterType("tecnology")}>Tecnologia</button>   
+            	    	<button className="category" onClick={() => setFilterType("startup")}>Startup</button>   
             	    	<a id="eliti" target="_blank" href="https://www.eliti.com.br/">ELITI</a>
 					</div>
 						: <div></div>
@@ -90,7 +82,7 @@ function Home(){
             <div className="content">
 				<div className="content-box">
                 	<div className="events">
-                 		{events.map((event)=>{
+						{updateEvents().map((event)=>{
 							return(
 								<div onClick={()=>{detailEvent(event)}} className="event">
 									<p>{event.title}</p>
