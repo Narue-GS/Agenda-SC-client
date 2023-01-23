@@ -60,7 +60,7 @@ function Home(){
 			<ModalEvent event={eventData} display={detail} close={setDetail}/>
 
 			<header>
-	            <span className="title" onClick={() => setFilterType("all")}>Agenda SC</span>
+	            <button className="title" onClick={() => setFilterType("all")}>Agenda SC</button>
 				<div className="category-box">
 					<div className="mobile-category-icon" onClick={()=>{ !showMenu? setShowMenu(true) : setShowMenu(false)}}>
                     	<FontAwesomeIcon icon={faBars}/>    
