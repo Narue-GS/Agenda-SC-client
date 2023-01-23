@@ -24,6 +24,7 @@ header:hover {
 	background-color: #1600FF;
 }
 .title {
+	cursor: pointer;
 	font-size: clamp(10px, 1.5vw + 1.5em, 5em);
 	display: flex;
 	justify-content: center;
