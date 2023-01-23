@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import HomeStyle from './home.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
-//import './home.css'
+import './home.css'
 import ModalEvent from "../../components/modal/modal.jsx";
 
 function Home(){
-	const [events, setEvents] = useState(allData)
+	const [events, setEvents] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
     const [filterType, setFilterType] = useState("all")
 	const [search, setSearch] = useState("");
@@ -16,7 +15,6 @@ function Home(){
 	const [showMenu, setShowMenu] = useState(window.innerWidth > 800)
 
 	const getEvents = async() => {
-		setAllData([])
 		setIsLoading(true)
 		await fetch(`https://agendasc.onrender.com/get_events?filter=all`,{
           	method: "GET",
@@ -29,6 +27,7 @@ function Home(){
 			setEvents(Object.values(data).flat(1))
 		})
 		.then(updateEvents())
+		.then(setIsLoading(false))
     }
     
 	useEffect(()=>{
