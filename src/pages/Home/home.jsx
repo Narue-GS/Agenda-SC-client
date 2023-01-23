@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import './home.css'
 import ModalEvent from "../../components/modal/modal.jsx";
-
+import Paginate from "../../components/pagination/pagination.jsx"
 function Home(){
 	const [events, setEvents] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
@@ -13,8 +13,15 @@ function Home(){
 	const [eventData, setEventData] = useState("");
 	const [detail, setDetail] = useState(false);
 	const [showMenu, setShowMenu] = useState(false)
+	const [eventsPerPage] = useState(6);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const lastEventIndex = currentPage * eventsPerPage;
+    const firstEventIndex = lastEventIndex - eventsPerPage;
+    const currentEvents = events.slice(firstEventIndex, lastEventIndex);
 
 	const getEvents = async() => {
+		console.log(currentEvents)
 		setIsLoading(true)
 		await fetch(`https://agendasc.onrender.com/get_events?filter=all`,{
           	method: "GET",
@@ -49,9 +56,9 @@ function Home(){
 	}
 	const updateEvents = () =>{
         if(filterType !== "all"){
-            return events.filter(event => event._filter === filterType)
+            return currentEvents.filter(event => event._filter === filterType)
         } else {
-            return events
+            return currentEvents
         }
     }
 
@@ -92,8 +99,15 @@ function Home(){
 						})} 
                 	</div>
 				</div>
+				<div>
+					<Paginate
+                    	eventsPerPage={eventsPerPage}
+                     	totalEvents={events.length}
+						hendleClick={setCurrentPage}
+                	/>
+             	</div>
             </div> 
-			 :<> 	
+			 :<> 
 				<div className="skeleton">
 						<div></div>
 						<div></div>
