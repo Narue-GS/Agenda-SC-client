@@ -1,0 +1,23 @@
+.pagination-container {
+	display: flex;
+	justify-content: center;
+}
+.pagination {
+	display: flex;
+	width: fit-content;
+	list-style: none;
+	padding: 5vh 0;
+}
+.page-number {
+	font-size: clamp(15px, 1vw + 1em, 3em);
+	margin: 0 2vw;
+	cursor:	pointer;
+	background-color: yellow;
+	padding: 0.5em;
+	border-radius: min(5px)
+}
+.page-number:hover {
+	background-color: blue;
+}
+
+
