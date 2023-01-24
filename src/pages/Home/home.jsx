@@ -56,9 +56,9 @@ function Home(){
 	}
 	const updateEvents = () =>{
         if(filterType !== "all"){
-            return currentEvents.filter(event => event._filter === filterType)
+            return events.filter(event => event._filter === filterType)
         } else {
-            return currentEvents
+            return events
         }
     }
 
@@ -99,13 +99,6 @@ function Home(){
 						})} 
                 	</div>
 				</div>
-				<div>
-					<Paginate
-                    	eventsPerPage={eventsPerPage}
-                     	totalEvents={events.length}
-						hendleClick={setCurrentPage}
-                	/>
-             	</div>
             </div> 
 			 :<> 
 				<div className="skeleton">
