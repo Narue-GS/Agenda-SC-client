@@ -7,6 +7,7 @@ import ModalEvent from "../../components/modal/modal.jsx";
 import Paginate from "../../components/pagination/pagination.jsx"
 function Home(){
 	const [events, setEvents] = useState([])
+	const filteredEvents = events
 	const [isLoading, setIsLoading] = useState(true)
     const [filterType, setFilterType] = useState("all")
 	const [search, setSearch] = useState("");
@@ -18,7 +19,7 @@ function Home(){
 
 	const lastEventIndex = currentPage * eventsPerPage;
     const firstEventIndex = lastEventIndex - eventsPerPage;
-    const currentEvents = events.slice(firstEventIndex, lastEventIndex);
+    let currentEvents = events.slice(firstEventIndex, lastEventIndex);
 
 	const getEvents = async() => {
 		console.log(currentEvents)
@@ -55,8 +56,9 @@ function Home(){
         })
 	}
 	const updateEvents = () =>{
-        if(filterType !== "all"){
-            return currentEvents.filter(event => event._filter === filterType)
+        if(filterType !== "all") {
+			currentEvents = events.filter(event => event._filter == filterType).slice(firstEventIndex, lastEventIndex);
+            return currentEvents
         } else {
             return currentEvents
         }
@@ -102,7 +104,9 @@ function Home(){
 				<div>
 					<Paginate
                     	eventsPerPage={eventsPerPage}
-                     	totalEvents={events.length}
+                     	totalEvents={
+							filterType === "all"? events.length : events.filter(event => event._filter == filterType).length
+						}
 						hendleClick={setCurrentPage}
                 	/>
              	</div>
