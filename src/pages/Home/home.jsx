@@ -76,9 +76,27 @@ function Home(){
                 	</div>
 					{ showMenu || window.innerWidth > 800?
 					<div className="category-menu">
-            			<button className="category" onClick={() => setFilterType("inovation")}>Inovação</button>
-           	    		<button className="category" onClick={() => setFilterType("tecnology")}>Tecnologia</button>   
-            	    	<button className="category" onClick={() => setFilterType("startup")}>Startup</button>   
+            			<button 
+							className="category" 
+							onClick={() =>{
+								setCurrentPage(1)
+								setFilterType("inovation")
+							}}>Inovação
+						</button>
+						<button                                      
+                            className="category" 
+                            onClick={() =>{
+                                setCurrentPage(1)
+                                setFilterType("startup")
+                            }}>Startup
+                        </button>
+						<button                                      
+                            className="category" 
+                            onClick={() =>{
+                                setCurrentPage(1)
+                                setFilterType("tecnology")
+                            }}>Tecnologia
+                        </button>
             	    	<a id="eliti" target="_blank" href="https://www.eliti.com.br/">ELITI</a>
 					</div>
 						: <div></div>
@@ -92,7 +110,7 @@ function Home(){
                 	<div className="events">
 						{updateEvents().map((event)=>{
 							return(
-								<div onClick={()=>{detailEvent(event)}} className="event">
+								<div key={event._id} onClick={()=>{detailEvent(event)}} className="event">
 									<p>{event.title}</p>
 									<img src={event.img}/>
 									<span>{event.location}</span>
