@@ -7,6 +7,7 @@ import ModalEvent from "../../components/modal/modal.jsx";
 import Paginate from "../../components/pagination/pagination.jsx"
 function Home(){
 	const [events, setEvents] = useState([])
+	const filteredEvents = events
 	const [isLoading, setIsLoading] = useState(true)
     const [filterType, setFilterType] = useState("all")
 	const [search, setSearch] = useState("");
@@ -18,7 +19,7 @@ function Home(){
 
 	const lastEventIndex = currentPage * eventsPerPage;
     const firstEventIndex = lastEventIndex - eventsPerPage;
-    const currentEvents = events.slice(firstEventIndex, lastEventIndex);
+    let currentEvents = events.slice(firstEventIndex, lastEventIndex);
 
 	const getEvents = async() => {
 		console.log(currentEvents)
@@ -55,10 +56,11 @@ function Home(){
         })
 	}
 	const updateEvents = () =>{
-        if(filterType !== "all"){
-            return events.filter(event => event._filter === filterType)
+        if(filterType !== "all") {
+			currentEvents = events.filter(event => event._filter == filterType).slice(firstEventIndex, lastEventIndex);
+            return currentEvents
         } else {
-            return events
+            return currentEvents
         }
     }
 
@@ -74,9 +76,27 @@ function Home(){
                 	</div>
 					{ showMenu || window.innerWidth > 800?
 					<div className="category-menu">
-            			<button className="category" onClick={() => setFilterType("inovation")}>Inovação</button>
-           	    		<button className="category" onClick={() => setFilterType("tecnology")}>Tecnologia</button>   
-            	    	<button className="category" onClick={() => setFilterType("startup")}>Startup</button>   
+            			<button 
+							className="category" 
+							onClick={() =>{
+								setCurrentPage(1)
+								setFilterType("inovation")
+							}}>Inovação
+						</button>
+						<button                                      
+                            className="category" 
+                            onClick={() =>{
+                                setCurrentPage(1)
+                                setFilterType("startup")
+                            }}>Startup
+                        </button>
+						<button                                      
+                            className="category" 
+                            onClick={() =>{
+                                setCurrentPage(1)
+                                setFilterType("tecnology")
+                            }}>Tecnologia
+                        </button>
             	    	<a id="eliti" target="_blank" href="https://www.eliti.com.br/">ELITI</a>
 					</div>
 						: <div></div>
@@ -90,7 +110,7 @@ function Home(){
                 	<div className="events">
 						{updateEvents().map((event)=>{
 							return(
-								<div onClick={()=>{detailEvent(event)}} className="event">
+								<div key={event._id} onClick={()=>{detailEvent(event)}} className="event">
 									<p>{event.title}</p>
 									<img src={event.img}/>
 									<span>{event.location}</span>
@@ -99,6 +119,15 @@ function Home(){
 						})} 
                 	</div>
 				</div>
+				<div>
+					<Paginate
+                    	eventsPerPage={eventsPerPage}
+                     	totalEvents={
+							filterType === "all"? events.length : events.filter(event => event._filter == filterType).length
+						}
+						hendleClick={setCurrentPage}
+                	/>
+             	</div>
             </div> 
 			 :<> 
 				<div className="skeleton">
