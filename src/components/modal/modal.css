@@ -11,6 +11,7 @@
 }
 .loading span {
 	font-size: clamp(30px, 1.5vw + 1.5em, 6em);
+	animation-name: loadingPulse;
 	animation-iteration-count: infinite;
 	animation-duration: 1s;
 	animation-direction: alternate;
@@ -31,6 +32,8 @@
 	padding: 2vw;
 	display: flex;
 	flex-direction: column;
+	max-height: 90vh;
+	overflow: scroll;
 	height: fit-content;
 	background-color: white;
 	border-radius: min(10px);
