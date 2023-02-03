@@ -5,7 +5,7 @@ const Paginate = ({ eventsPerPage, totalEvents, hendleClick}) => {
    const pageNumbers = [];
  
    for (let i = 1; i <= Math.ceil(totalEvents / eventsPerPage); i++) {
-      pageNumbers.push(i);
+		pageNumbers.push(i);
    }
  
    return (
@@ -16,6 +16,7 @@ const Paginate = ({ eventsPerPage, totalEvents, hendleClick}) => {
                   {number}
                </li>
             ))}
+	   		<span style={{display: pageNumbers.length > 5 ? "block" : "none"}}>...</span>
          </ul>
       </div>
    );

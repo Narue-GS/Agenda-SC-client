@@ -7,6 +7,7 @@ import ModalEvent from "../../components/modal/modal.jsx";
 import Paginate from "../../components/pagination/pagination.jsx"
 function Home(){
 	const [events, setEvents] = useState([])
+	const [totalEvents, setTotalEvents] = useState(1)
 	const filteredEvents = events
 	const [isLoading, setIsLoading] = useState(true)
     const [filterType, setFilterType] = useState("all")
@@ -14,33 +15,28 @@ function Home(){
 	const [eventData, setEventData] = useState("");
 	const [detail, setDetail] = useState(false);
 	const [showMenu, setShowMenu] = useState(false)
-	const [eventsPerPage] = useState(6);
 	const [currentPage, setCurrentPage] = useState(1);
 
-	const lastEventIndex = currentPage * eventsPerPage;
-    const firstEventIndex = lastEventIndex - eventsPerPage;
-    let currentEvents = events.slice(firstEventIndex, lastEventIndex);
-
 	const getEvents = async() => {
-		console.log(currentEvents)
 		setIsLoading(true)
-		await fetch(`https://agendasc.onrender.com/get_events?filter=all`,{
+		await fetch(`https://agendasc.onrender.com/get_events?page=${currentPage}`,{
           	method: "GET",
            	mode: "cors",
            	headers: {'Content-type':'application/json',},
         })
 		.then((res) => res.json())
 		.then((data) => {
-			setIsLoading(false)
-			setEvents(Object.values(data).flat(1))
+			setEvents(data.events)
+			setTotalEvents(data.total_events)
 		})
-		.then(updateEvents())
-		.then(setIsLoading(false))
+		setTimeout(()=>{
+			setIsLoading(false)
+		}, 200)
     }
     
 	useEffect(()=>{
 		getEvents()
-    },[])
+    },[currentPage])
 	
 	const detailEvent = async(event) => {
 		setEventData(null)
@@ -56,12 +52,6 @@ function Home(){
         })
 	}
 	const updateEvents = () =>{
-        if(filterType !== "all") {
-			currentEvents = events.filter(event => event._filter == filterType).slice(firstEventIndex, lastEventIndex);
-            return currentEvents
-        } else {
-            return currentEvents
-        }
     }
 
 	return (
@@ -104,11 +94,11 @@ function Home(){
 				</div>
             </header>
 			
-			{events.length != 0? 
+			{!isLoading? 
             <div className="content">
 				<div className="content-box">
                 	<div className="events">
-						{updateEvents().map((event)=>{
+						{events.map((event)=>{
 							return(
 								<div key={event._id} onClick={()=>{detailEvent(event)}} className="event">
 									<p>{event.title}</p>
@@ -121,10 +111,8 @@ function Home(){
 				</div>
 				<div>
 					<Paginate
-                    	eventsPerPage={eventsPerPage}
-                     	totalEvents={
-							filterType === "all"? events.length : events.filter(event => event._filter == filterType).length
-						}
+                    	eventsPerPage={6}
+                     	totalEvents={totalEvents}
 						hendleClick={setCurrentPage}
                 	/>
              	</div>

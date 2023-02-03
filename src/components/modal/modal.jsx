@@ -15,9 +15,7 @@ const ModalEvent = ({event, display, close}) => {
 								<span>Mais informações: <a href={event.link} target="_blank">{event.link}</a></span>
 							</div>
 						 :	<div className="loading">
-								<div>
-									<img src="../../static/imgs/loading-icon.gif"/>
-								</div>
+								<span>Carregando</span>
 							</div>
 					}
         		</div>

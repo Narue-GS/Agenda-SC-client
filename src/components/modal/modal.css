@@ -9,11 +9,13 @@
 	height: 100vh;
 	align-items: center;
 }
-.loading div{
-	opacity: 50%;
-}
-.loading div img{
-	height: 100vh;
+.loading span {
+	font-size: clamp(30px, 1.5vw + 1.5em, 6em);
+	animation-iteration-count: infinite;
+	animation-duration: 1s;
+	animation-direction: alternate;
+	font-weight: 700;
+	color: white;
 }
 .modalShadown {
 	background-color: rgba(0,0,0,0.5);
@@ -48,14 +50,24 @@
 	width: fit-content;
 }
 
+@keyframes loadingPulse {
+	0% {
+		opacity: 80%
+	}
+	100%{
+		opacity: 100%;
+		transform: scale(2)
+	}
+}
+
 @media screen and (max-width:800px) {
 	.modalContent {
 		width: 80%;
-		min-height: 80vh;
-		margin-top: 5vh;
+		min-height: 50vh;
+		margin-top: -20vh;
 		justify-content: space-evenly;
 	}
 	.modal {
-		align-items: normal;
+		align-items: center;
 	}
 }

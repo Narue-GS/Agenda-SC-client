@@ -4,9 +4,21 @@
 }
 .pagination {
 	display: flex;
-	width: fit-content;
+	max-width: 80%;
+	overflow: scroll;
 	list-style: none;
 	padding: 5vh 0;
+}
+.pagination::-webkit-scrollbar{  
+    width: 6px;  
+    height: 9px;
+    background-color: rgba(0,0,0,1);
+}
+
+.pagination::-webkit-scrollbar-thumb{
+	width: 5px;
+  	height: 8px;
+  	background-color: #aaa;
 }
 .page-number {
 	font-size: clamp(15px, 1vw + 1em, 3em);
