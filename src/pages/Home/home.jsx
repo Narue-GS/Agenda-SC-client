@@ -10,7 +10,7 @@ function Home(){
 	const [totalEvents, setTotalEvents] = useState(1)
 	const filteredEvents = events
 	const [isLoading, setIsLoading] = useState(true)
-    const [filterType, setFilterType] = useState("all")
+    const [filterType, setFilterType] = useState("")
 	const [search, setSearch] = useState("");
 	const [eventData, setEventData] = useState("");
 	const [detail, setDetail] = useState(false);
@@ -19,7 +19,8 @@ function Home(){
 
 	const getEvents = async() => {
 		setIsLoading(true)
-		await fetch(`https://agendasc.onrender.com/get_events?page=${currentPage}`,{
+
+		await fetch(`https://agendasc.onrender.com/get_events?page=${currentPage}${filterType? "&filter=" + filterType : ""} `,{
           	method: "GET",
            	mode: "cors",
            	headers: {'Content-type':'application/json',},
@@ -36,7 +37,7 @@ function Home(){
     
 	useEffect(()=>{
 		getEvents()
-    },[currentPage])
+    },[currentPage, filterType])
 	
 	const detailEvent = async(event) => {
 		setEventData(null)
@@ -59,7 +60,11 @@ function Home(){
 			<ModalEvent event={eventData} display={detail} close={setDetail}/>
 
 			<header>
-	            <button className="title" onClick={() => setFilterType("all")}>Agenda SC</button>
+	            <button className="title" onClick={() =>{
+					setCurrentPage(1)
+					setFilterType("")
+				}
+				}>Agenda SC</button>
 				<div className="category-box">
 					<div className="mobile-category-icon" onClick={()=>{ !showMenu? setShowMenu(true) : setShowMenu(false)}}>
                     	<FontAwesomeIcon icon={faBars}/>    
